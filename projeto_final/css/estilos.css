@@ -1,0 +1,307 @@
+/* CSS Document     */
+/* Folha de estilos */
+/* Aula 5           */
+/* ---------------- */
+/* GERAL *********************************** */
+body {
+	margin: 16px 10% 0 10%;
+	padding: 0;
+	background-color:#fff1e0;
+	background-image: url(../img/background-2.png);
+	/*
+	background: -moz-linear-gradient(123deg, #FDFFDE 0%, #EDD3A4 100%);
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #EDD3A4), color-stop(100%, #FDFFDE));
+	background: -webkit-linear-gradient(123deg, #FDFFDE 0%, #EDD3A4 100%);
+	background: -o-linear-gradient(123deg, #FDFFDE 0%, #EDD3A4 100%);
+	background: -ms-linear-gradient(123deg, #FDFFDE 0%, #EDD3A4 100%);
+	background: linear-gradient(327deg, #FDFFDE 0%, #EDD3A4 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EDD3A4', endColorstr='#FDFFDE',GradientType=0 );
+	*/	
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color:#333;
+}
+/* links */
+a:link {
+	color: #000
+}
+/* links visitados */
+a:visited {
+	color: #666
+}
+/* links ativos */
+a:active {
+	color: #900
+}
+/* user hovers */
+a:hover {
+	font-weight: bold
+}
+header h1, header h2 {
+	font-family:Verdana, Geneva, sans-serif;
+}
+header h1 {
+	color:#bc4b51;
+}
+header h2 {
+	color:#ed7207;
+	border-bottom: 2px solid #ed7207;
+	padding-bottom: 16px;
+}
+code {
+	font-size:20px;
+	color:black;
+	background-color:rgba(255, 204, 102, 0.5);
+	padding: 0.50rem;
+}
+pre {
+	margin:0;
+	padding: 8px;
+	font-size:18px;
+	color:black;
+	background-color:rgba(255, 204, 102, 0.5);
+	border-radius: 10px;
+	padding: 10px;
+}
+li {
+	margin-bottom:4px;
+}
+#exemplo p {
+	color:#999;
+	font-style:italic;
+}
+#exemplo .logo-projeto {
+	float:left;
+	border:0;
+	padding: 32px 16px 0 16px;
+	height: 300px;
+}
+footer {
+	border-top: 1px solid #ed7207;
+	margin-top: 16px;
+	padding-top:0;
+}
+.logo-prodabel {
+	float: left;
+}
+.logo-prodabel img {
+	width:160px;
+	padding-top: 36px;
+}
+.logo-pbh {
+	float: right;
+}
+.logo-pbh img {
+	width:180px;
+}
+/* TABELAS *********************************** */
+table {
+}
+th {
+	background-color:#999;
+	color:#fff;
+}
+tr.linha01 td {
+	background-color:#fff !important;
+	color:#000;
+	text-align:center
+}
+tr.linha02 td {
+	background-color:#ccc;
+	color:#000;
+	text-align:center
+}
+td {
+	text-align: center;
+}
+table.exercicio {
+	background-color:darkorange;
+	border:1px;
+}
+table.exercicio th {
+	background-color:darkorange;
+	color:white;
+}
+table.exercicio tr.mes td {
+	background-color:wheat;
+	color:black;
+}
+table.exercicio td {
+	background-color:white;
+	color:black;
+	padding: 10px;
+}
+table.inscritos {
+	border: 0px solid #ccc;
+	width:100%;
+	margin-bottom: 8px;
+}
+table.inscritos th {
+	padding: 8px;
+	background-color:#bc4b51;
+}
+table.inscritos tr td {
+	border-bottom: 1px solid #999;
+	padding: 8px;
+}
+.destaque-data {
+	background: #FC0;
+}
+/* paginacao */
+ul.paginacao {
+	padding-left: 0;
+}
+ul.paginacao li {
+	display:inline;
+	padding: 6px 10px;
+	border: 1px solid grey;
+	font-size: 12px;
+}
+ul.paginacao li:hover {
+	background-color:#ddd;
+}
+ul.paginacao li.atual {
+	background-color:#ddd;
+	color:#000;
+}
+/* *********************************** */
+form p {
+	margin-top: 0;
+	margin-bottom: 10px;
+	border-bottom: 0;
+	padding-bottom: 0;
+}
+#exemplo form p {
+	color:#333;
+	font-style: normal;
+}
+label {
+	min-width: 100px;
+	display: inline-block;
+}
+fieldset {
+	border:solid 1px #B1C2CB;
+	margin-bottom: 15px;
+}
+legend {
+	text-transform: capitalize;
+	margin-bottom: 10px;
+	padding: 4px 8px;
+	border/*-bottom*/: 1px solid black;
+	font-weight: bold;
+}
+.asterisco {
+	color: red;
+	font-size: 22px;
+	font-weight: bold;
+}
+button {
+	padding: 8px;
+	border-radius: 8px;
+	border: 1px solid #999;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-right: 10px;
+}
+button:hover {
+	background: #0C0;
+	color: #000;
+}
+button[type=reset] {
+	background:transparent;
+}
+button[type=reset]:hover {
+	background: #FF9;
+}
+button img {
+	margin-right: 5px;
+}
+
+input, input[type=date] {
+	font-size: 16px !important;
+}
+input[type=text], 
+input[type=date], 
+select {
+	padding: 5px;
+}
+input[type=text],
+input[type=date],
+input[type=password],
+select {
+	margin-right:12px;
+}
+option {
+	font-size: 16px;
+}
+input[type=checkbox], 
+input[type=radio] {
+	width: 20px;
+	height: 20px;
+}
+input[type=submit], 
+input[type=reset], 
+input[type=button] {
+	padding: 8px;
+	border-radius: 6px;
+	border: 1px solid #999;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight: 600;
+	color:#335448;
+	text-transform: uppercase;
+}
+input[type=submit] {
+	background-color:#335448;
+	color:#fff;
+}
+input[type=submit]:hover {
+	background-color: #46852C;
+	color:#fff;
+}
+input[type=reset] {
+	background-color:transparent;
+	border-color:transparent;
+}
+input[type=reset]:hover {
+	background-color:#fff;
+}
+input::placeholder {
+  color: #999;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+textarea {
+	width:450px;
+	height: 75px;
+	resize:none;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:16px;
+	margin-top: 4px;
+}
+
+.inscricao {
+	background: #CFE7E3;
+	margin-top: 32px;
+	padding: 8px 32px 32px;
+	border-radius: 16px;
+}
+.inscricao h2 {
+	background: #FC3;
+	padding: 8px;
+}
+
+.rodape {
+	background: transparent;
+	border-top: 1px solid #090;
+	color: #000;
+	font-weight: 600;
+	margin-top: 16px;
+	margin-bottom: 32px;
+	padding-top: 16px;
+}
+.rodape p {
+	font-size: 16px;
+}
+.rodape a:hover {
+	border-bottom: 2px solid black;
+ background:grey:
+}
