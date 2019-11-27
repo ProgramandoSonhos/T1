@@ -13,47 +13,21 @@
     
 <body>  
     <?php
-      // conexao com o banco
-      $mysqli = mysqli_connect('localhost', 'root', '', 'turma1');
-      if(mysqli_connect_errno()) {
-        echo '<b style="color:red">ERRO: '.mysqli_connect_error()."</b>";
-      }
-    ?>
-
-    <?php
+      require('./database.php');
+      // realiza conexao com o banco
+      $mysqli = conecta('localhost', 'root', '', 'turma1');
       //se postei o form, insere no banco
       if($_POST) {
-        //recupera parametros POST
-        $nome = $_POST['nome'] ?? '';
-        $cpf = $_POST['cpf'] ?? '';
-        $data_nasc = $_POST['nascimento'] ?? '';
-        $estado_civil = $_POST['estado-civil'] ?? '';
-        // constroi a query de insercao de dados de uma pessoa
-        $query = "INSERT INTO 
-        dados_pessoais(nome, data_nasc, cpf, estado_civil)
-        VALUES('$nome', '$data_nasc', $cpf, '$estado_civil')";
-  
-        // executa a query de insercao
-        mysqli_query($mysqli, $query);
-        if(mysqli_errno($mysqli)) {
-          echo mysqli_error($mysqli);
-        }
+        // insere no banco dados da pessoa
+        insereDados($mysqli, 
+                    $_POST['nome'], 
+                    $_POST['cpf'], 
+                    $_POST['nascimento']   ?? '',
+                    $_POST['estado-civil'] ?? '');
+      }  
 
-      // senão, recupera do banco
-      } else {
-        $listaPessoa = [];
-        $query = "SELECT nome, data_nasc FROM dados_pessoais";
-        $resultado = mysqli_query($mysqli, $query);
-        if(mysqli_errno($mysqli)) {
-          echo mysqli_error($mysqli);
-        } else {
-          while($linha = mysqli_fetch_assoc($resultado)) {
-            array_push($listaPessoa, $linha);
-          }
-        }
-        
-        var_dump($listaPessoa);
-      }
+      // recupera lista de pessoas para exibir abaixo do form
+      $listaPessoa = getPessoas($mysqli);
 
     ?>
 
@@ -168,7 +142,13 @@
         ?>            
             <tr>
               <td><?= $value['nome'] ?></td>
-              <td><?= $value['data_nasc'] ?></td>
+              <td><?php
+                  $d1   = new DateTime($value['data_nasc']);
+                  $d2   = new DateTime('today');
+                  $diff = $d2->diff($d1);
+                  echo $diff->y;
+              ?>
+              </td>
               <td>&nbsp;</td>
               <td>S/N</td>
               <td><?= $key ?></td>
