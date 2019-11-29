@@ -68,3 +68,15 @@ function getPessoas($mysqli, $paginaCorrente=1, $qtdPorPagina=5)
 
     return $listaPessoa;
 }
+
+function getQtdTotalPessoas($mysqli)
+{
+  $query = 'SELECT count(*) as qtd FROM dados_pessoais';
+  $resultado = mysqli_query($mysqli, $query);
+  if(mysqli_errno($mysqli)) {
+    echo mysqli_error($mysqli);
+    return false;
+  }
+  $qtd = mysqli_fetch_assoc($resultado);
+  return $qtd['qtd'];
+}
