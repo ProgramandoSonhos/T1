@@ -8,7 +8,13 @@
         <meta name="keywords" content="HTML,CSS,Projeto Programando Sonhos,PBH">        
         
     	<link href="css/estilos.css" rel="stylesheet" type="text/css">
-    
+      <script>
+          function pagina(valor) {
+            document.getElementById('paginaCorrente').value = valor;
+            document.getElementById('paginacao').submit();
+          }
+
+      </script>    
     </head>
     
 <body>  
@@ -27,7 +33,8 @@
       }  
 
       // recupera lista de pessoas para exibir abaixo do form
-      $listaPessoa = getPessoas($mysqli);
+      $pagCor = $_GET['paginaCorrente'] ?? 1;
+      $listaPessoa = getPessoas($mysqli, $pagCor);
 
     ?>
 
@@ -46,11 +53,6 @@
              
          <form name="inscricao" method="post" action="">
          <p><small>Os campos marcados com <span style="color:red; font-weight:bold; font-size:18px">*</span> são de preenchimento obrigatório.</small></p>
-        <?php
-          // 1. conecta no banco
-          // 2. executa a query 'SELECT * FROM pessoa WHERE id = $id'
-          // 3. armazena resultado em um array
-        ?>
         <!-- -->
         <fieldset>
           <legend>Dados Pessoais</legend>
@@ -159,7 +161,18 @@
         ?>
       </table>
       
-      <ul class="paginacao"> <li><<</li> <li class="atual">1</li> <li>2</li> <li>3</li> <li>4</li> <li>5</li> <li>>></li> </ul>
+      <form action="" method="get" id='paginacao'>
+          <input type="hidden" name="paginaCorrente" id="paginaCorrente">
+        <ul class="paginacao"> 
+          <li><<</li> 
+          <li class="atual" onClick='pagina(1)'>1</li> 
+          <li onClick='pagina(2)'>2</li> 
+          <li onClick='pagina(3)'>3</li> 
+          <li onClick='pagina(4)'>4</li> 
+          <li onClick='pagina(5)'>5</li> 
+          <li>>></li> 
+        </ul>
+      </form>
       
     <h4>Total de inscritos:&nbsp;</h4>    
 
