@@ -12,6 +12,7 @@
           function pagina(valor) {
             document.getElementById('paginaCorrente').value = valor;
             document.getElementById('paginacao').submit();
+//          window.location.href = 'http://localhost/turma1/projeto_final/?paginaCorrente='+valor
           }
 
       </script>    
@@ -34,8 +35,10 @@
 
       // recupera lista de pessoas para exibir abaixo do form
       $pagCor = $_GET['paginaCorrente'] ?? 1;
-      $listaPessoa = getPessoas($mysqli, $pagCor);
-
+      $qtdPorPagina = $_GET['qtdPorPagina'] ?? 5;
+      $listaPessoa = getPessoas($mysqli, $pagCor, $qtdPorPagina);
+      $qtdInscritos = getQtdTotalPessoas($mysqli);
+      $qtdPaginas = ceil($qtdInscritos / $qtdPorPagina);
     ?>
 
     <header>
@@ -161,7 +164,7 @@
         ?>
       </table>
       
-      <form action="" method="get" id='paginacao'>
+      <form action="" method="post" id='paginacao'>
           <input type="hidden" name="paginaCorrente" id="paginaCorrente">
         <ul class="paginacao"> 
           <li><<</li> 
@@ -173,8 +176,8 @@
           <li>>></li> 
         </ul>
       </form>
-      
-    <h4>Total de inscritos:&nbsp;</h4>    
+      <?= $qtdPaginas ?>
+    <h4>Total de inscritos: <?= $qtdInscritos ?></h4>    
 
     </section>
     
