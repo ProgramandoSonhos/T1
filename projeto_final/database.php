@@ -48,10 +48,15 @@ function insereDados($mysqli,
     }
 }
 
-function getPessoas($mysqli)
+function getPessoas($mysqli, $paginaCorrente=1, $qtdPorPagina=5)
 {
     $listaPessoa = [];
-    $query = "SELECT nome, data_nasc FROM dados_pessoais";
+    $offset = ($paginaCorrente - 1) * $qtdPorPagina;
+    $query = "SELECT nome, data_nasc 
+              FROM dados_pessoais
+              ORDER BY nome ASC
+              LIMIT $qtdPorPagina
+              OFFSET $offset";
     $resultado = mysqli_query($mysqli, $query);
     if(mysqli_errno($mysqli)) {
       echo mysqli_error($mysqli);
