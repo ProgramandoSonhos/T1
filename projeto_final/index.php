@@ -1,3 +1,24 @@
+<?php
+  require('./database.php');
+  // realiza conexao com o banco
+  $mysqli = conecta('localhost', 'root', '', 'turma1');
+  //se postei o form, insere no banco
+  if($_POST) {
+    // insere no banco dados da pessoa
+    insereDados($mysqli, 
+                $_POST['nome'], 
+                $_POST['cpf'], 
+                $_POST['nascimento']   ?? '',
+                $_POST['estado-civil'] ?? '');
+  }  
+
+  // recupera lista de pessoas para exibir abaixo do form
+  $pagCor = $_GET['paginaCorrente'] ?? 1;
+  $qtdPorPagina = $_GET['qtdPorPagina'] ?? 1;
+  $listaPessoa = getPessoas($mysqli, $pagCor, $qtdPorPagina);
+  $qtdInscritos = getQtdTotalPessoas($mysqli);
+  $qtdPaginas = ceil($qtdInscritos / $qtdPorPagina);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -10,37 +31,21 @@
     	<link href="css/estilos.css" rel="stylesheet" type="text/css">
       <script>
           function pagina(valor) {
+            let qtdPaginas = <?= $qtdPaginas ?>;
+            if(valor <= 0) {
+              valor = 1;
+            } else if(valor > qtdPaginas){
+              valor = qtdPaginas;
+            }
             document.getElementById('paginaCorrente').value = valor;
             document.getElementById('paginacao').submit();
 //          window.location.href = 'http://localhost/turma1/projeto_final/?paginaCorrente='+valor
           }
-
       </script>    
+
     </head>
     
 <body>  
-    <?php
-      require('./database.php');
-      // realiza conexao com o banco
-      $mysqli = conecta('localhost', 'root', '', 'turma1');
-      //se postei o form, insere no banco
-      if($_POST) {
-        // insere no banco dados da pessoa
-        insereDados($mysqli, 
-                    $_POST['nome'], 
-                    $_POST['cpf'], 
-                    $_POST['nascimento']   ?? '',
-                    $_POST['estado-civil'] ?? '');
-      }  
-
-      // recupera lista de pessoas para exibir abaixo do form
-      $pagCor = $_GET['paginaCorrente'] ?? 1;
-      $qtdPorPagina = $_GET['qtdPorPagina'] ?? 5;
-      $listaPessoa = getPessoas($mysqli, $pagCor, $qtdPorPagina);
-      $qtdInscritos = getQtdTotalPessoas($mysqli);
-      $qtdPaginas = ceil($qtdInscritos / $qtdPorPagina);
-    ?>
-
     <header>
     
          <h1>Projeto Programando Sonhos</h1>
@@ -164,16 +169,24 @@
         ?>
       </table>
       
-      <form action="" method="post" id='paginacao'>
+      <form action="" method="get" id='paginacao'>
           <input type="hidden" name="paginaCorrente" id="paginaCorrente">
         <ul class="paginacao"> 
-          <li><<</li> 
-          <li class="atual" onClick='pagina(1)'>1</li> 
-          <li onClick='pagina(2)'>2</li> 
-          <li onClick='pagina(3)'>3</li> 
-          <li onClick='pagina(4)'>4</li> 
-          <li onClick='pagina(5)'>5</li> 
-          <li>>></li> 
+          <li onClick="pagina(<?= $pagCor-1 ?>)"><< </li> 
+          <?php 
+          for($i = 0; $i < $qtdPaginas; $i++) {
+          ?>
+          <li class="<?php 
+                if($i+1 == $pagCor) echo'atual';
+                else echo '';
+              ?>" 
+              onClick='pagina(<?= $i+1 ?>)'>
+              <?= $i+1 ?>
+          </li> 
+          <?php
+          }
+          ?>
+          <li onClick="pagina(<?= $pagCor+1 ?>)">>></li> 
         </ul>
       </form>
       <?= $qtdPaginas ?>
