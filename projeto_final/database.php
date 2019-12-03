@@ -69,6 +69,21 @@ function getPessoas($mysqli, $paginaCorrente=1, $qtdPorPagina=5)
     return $listaPessoa;
 }
 
+function getPessoa($mysqli, $id)
+{
+    $pessoa = null;
+    $query = "SELECT *
+              FROM dados_pessoais
+              WHERE id = $id";
+    $resultado = mysqli_query($mysqli, $query);
+    if(mysqli_errno($mysqli)) {
+      echo mysqli_error($mysqli);
+    } else {
+      $pessoa = mysqli_fetch_assoc($resultado);
+    }
+    return $pessoa;
+}
+
 function getQtdTotalPessoas($mysqli)
 {
   $query = 'SELECT count(*) as qtd FROM dados_pessoais';
@@ -79,4 +94,15 @@ function getQtdTotalPessoas($mysqli)
   }
   $qtd = mysqli_fetch_assoc($resultado);
   return $qtd['qtd'];
+}
+
+function deletePessoa($mysqli, $id)
+{
+  $query = "DELETE FROM dados_pessoais WHERE id = $id";
+  $resultado = mysqli_query($mysqli, $query);
+  if(mysqli_errno($mysqli)) {
+    echo mysqli_error($mysqli);
+    return false;
+  }
+  return true;
 }
