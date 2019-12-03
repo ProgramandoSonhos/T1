@@ -156,6 +156,7 @@ ul.paginacao li {
 	padding: 6px 10px;
 	border: 1px solid grey;
 	font-size: 12px;
+	cursor: pointer;
 }
 ul.paginacao li:hover {
 	background-color:#ddd;
@@ -256,6 +257,9 @@ input[type=submit] {
 input[type=submit]:hover {
 	background-color: #46852C;
 	color:#fff;
+}
+input.delete:hover {
+	background-color: #900 !important;
 }
 input[type=reset] {
 	background-color:transparent;
