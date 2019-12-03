@@ -2,17 +2,28 @@
   require('./database.php');
   // realiza conexao com o banco
   $mysqli = conecta('localhost', 'root', '', 'turma1');
-  $id = null;
+  $id = $_GET['id'] ?? null;
+  $pessoa = null;
   //se postei o form, insere no banco
   if($_POST) {
-    // insere no banco dados da pessoa
-    insereDados($mysqli, 
-                $_POST['nome'], 
-                $_POST['cpf'], 
-                $_POST['nascimento']   ?? '',
-                $_POST['estado-civil'] ?? '');
-  } else if(isset($_GET['id'])) {
-    $id = $_GET['id'];
+    if($_POST['acao'] == 'ENVIAR') {
+      // insere no banco dados da pessoa
+      insereDados($mysqli, 
+                  $_POST['nome'], 
+                  $_POST['cpf'], 
+                  $_POST['nascimento']   ?? '',
+                  $_POST['estado-civil'] ?? '');
+    } else if($_POST['acao'] == 'REMOVER') {
+      $resultado = deletePessoa($mysqli, $id);
+      if($resultado) {
+        header('Location: http://localhost/turma1/projeto_final/');
+      }
+
+    } else if($_POST['acao'] == 'ATUALIZAR') {
+      // to do
+    }
+  } else if(isset($id)) {
+    $pessoa = getPessoa($mysqli, $id);
   } 
 
   // recupera lista de pessoas para exibir abaixo do form
@@ -69,18 +80,54 @@
           <legend>Dados Pessoais</legend>
           <p>
             <label for="nome">Nome <span class="asterisco">*</span></label>
-            <input name="nome" type="text" id="nome" size="50" maxlength="50" required>
+            <input name="nome" 
+                   type="text" 
+                   id="nome" 
+                   size="50" 
+                   maxlength="50" 
+                   required
+                   value='<?= $pessoa['nome'] ?? '' ?>'>
             <label for="nascimento">Data de nascimento</label>
-            <input name="nascimento"  type="date" id="nascimento" size="12" maxlength="10" placeholder="__/__/____">
+            <input name="nascimento"  
+                   type="date" 
+                   id="nascimento" 
+                   size="12" 
+                   maxlength="10" 
+                   placeholder="__/__/____"
+                   value='<?= $pessoa['data_nasc'] ?>'>
           </p>
           <p>
             <label for="cpf">CPF <span class="asterisco">*</span></label>
-            <input name="cpf" type="text" id="cpf" size="16" maxlength="14" required>
+            <input name="cpf" 
+                   type="text" 
+                   id="cpf" 
+                   size="16" 
+                   maxlength="14" 
+                   required
+                   value='<?= $pessoa['cpf'] ?>'>
           </p>
           <p>
             <label>Estado Civil</label>
-            <label><input type="radio" name="estado-civil" value="solteiro" id="estado-civil_1">Solteiro </label>
-            <label><input type="radio" name="estado-civil" value="casado" id="estado-civil_2">Casado </label>
+            <label><input type="radio" 
+                          name="estado-civil" 
+                          value="solteiro" 
+                          <?php 
+                            if($pessoa["estado_civil"] == 'solteiro') {
+                              echo "checked";
+                            } 
+                          ?>
+                          id="estado-civil_1">Solteiro </label>
+            <label><input type="radio" 
+                          name="estado-civil" 
+                          value="casado" 
+                          id="estado-civil_2"
+                          
+                          <?php 
+                            if($pessoa["estado_civil"] == 'casado') {
+                              echo "checked";
+                            } 
+                          ?>
+                          >Casado </label>
             </label>
             <br>
           </p>
@@ -137,12 +184,12 @@
         <?php
         if($id) {
         ?>
-        <input type="submit" name="atualizar" id="atualizar" value="ATUALIZAR INSCRIÇÃO">&nbsp;&nbsp;
-        <input type="submit" name="remover" id="remover" value="REMOVER INSCRIÇÃO">&nbsp;&nbsp;
+        <input type="submit" name="acao" id="atualizar" value="ATUALIZAR">&nbsp;&nbsp;
+        <input type="submit" name="acao" id="remover" class='delete' value="REMOVER">&nbsp;&nbsp;
         <?php
         } else {
         ?>
-        <input type="submit" name="acessar" id="acessar" value="ENVIAR INSCRIÇÃO">&nbsp;&nbsp;
+        <input type="submit" name="acao" id="acessar" value="ENVIAR">&nbsp;&nbsp;
         <?php
         }
         ?>
