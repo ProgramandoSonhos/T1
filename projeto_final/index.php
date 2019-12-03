@@ -2,6 +2,7 @@
   require('./database.php');
   // realiza conexao com o banco
   $mysqli = conecta('localhost', 'root', '', 'turma1');
+  $id = null;
   //se postei o form, insere no banco
   if($_POST) {
     // insere no banco dados da pessoa
@@ -10,11 +11,13 @@
                 $_POST['cpf'], 
                 $_POST['nascimento']   ?? '',
                 $_POST['estado-civil'] ?? '');
-  }  
+  } else if(isset($_GET['id'])) {
+    $id = $_GET['id'];
+  } 
 
   // recupera lista de pessoas para exibir abaixo do form
   $pagCor = $_GET['paginaCorrente'] ?? 1;
-  $qtdPorPagina = $_GET['qtdPorPagina'] ?? 1;
+  $qtdPorPagina = $_GET['qtdPorPagina'] ?? 5;
   $listaPessoa = getPessoas($mysqli, $pagCor, $qtdPorPagina);
   $qtdInscritos = getQtdTotalPessoas($mysqli);
   $qtdPaginas = ceil($qtdInscritos / $qtdPorPagina);
@@ -130,8 +133,20 @@
           </p>
         </fieldset>
 -->        
-        <!-- -->                 
-         <input type="submit" name="acessar" id="acessar" value="ENVIAR INSCRIÇÃO">&nbsp;&nbsp;<input type="reset" name="cancelar" id="cancelar" value="CANCELAR">         
+        <!-- -->
+        <?php
+        if($id) {
+        ?>
+        <input type="submit" name="atualizar" id="atualizar" value="ATUALIZAR INSCRIÇÃO">&nbsp;&nbsp;
+        <input type="submit" name="remover" id="remover" value="REMOVER INSCRIÇÃO">&nbsp;&nbsp;
+        <?php
+        } else {
+        ?>
+        <input type="submit" name="acessar" id="acessar" value="ENVIAR INSCRIÇÃO">&nbsp;&nbsp;
+        <?php
+        }
+        ?>
+        <input type="reset" name="cancelar" id="cancelar" value="CANCELAR">         
 
       </form>
 
